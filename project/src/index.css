@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #FF0000;
+  --dark: #000000;
+  --neon-red: #FF073A;
+  --neon-blue: #0AEFFF;
+  --neon-purple: #B026FF;
+  --neon-green: #04FFA5;
+}
+
+html, body {
+  @apply bg-dark-500 text-white font-sora;
+  scroll-behavior: smooth;
+}
+
+.noise-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 1s linear infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff073a;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 #0aefff;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(49px, 9999px, 40px, 0);
+  }
+  20% {
+    clip: rect(32px, 9999px, 18px, 0);
+  }
+  40% {
+    clip: rect(54px, 9999px, 93px, 0);
+  }
+  60% {
+    clip: rect(74px, 9999px, 68px, 0);
+  }
+  80% {
+    clip: rect(23px, 9999px, 13px, 0);
+  }
+  100% {
+    clip: rect(54px, 9999px, 43px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(25px, 9999px, 99px, 0);
+  }
+  20% {
+    clip: rect(44px, 9999px, 44px, 0);
+  }
+  40% {
+    clip: rect(12px, 9999px, 19px, 0);
+  }
+  60% {
+    clip: rect(59px, 9999px, 71px, 0);
+  }
+  80% {
+    clip: rect(37px, 9999px, 83px, 0);
+  }
+  100% {
+    clip: rect(33px, 9999px, 5px, 0);
+  }
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 7, 58, 0.3);
+  z-index: 2;
+  pointer-events: none;
+  animation: scan-line 2s linear infinite;
+}
+
+.terminal-cursor {
+  @apply inline-block w-2 h-4 bg-primary-500 align-middle;
+  animation: blink 1s step-end infinite;
+}
+
+.neural-grid {
+  background-image: 
+    radial-gradient(circle, rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.red-pulse {
+  box-shadow: 0 0 10px 0 rgba(255, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.red-pulse:hover {
+  box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.7);
+}
+
+@layer components {
+  .btn-terminal {
+    @apply font-tech text-neon-red border border-neon-red py-2 px-4 transition-all duration-300 hover:bg-neon-red/10;
+  }
+
+  .heading-glitch {
+    @apply font-tech text-white relative;
+  }
+}
+
+.matrix-mode {
+  position: relative;
+  overflow: hidden;
+}
+
+.matrix-mode::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+  background-size: 2px 2px;
+  animation: matrix 20s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes matrix {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.command-output-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.command-output-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.command-output-exit {
+  opacity: 1;
+}
+
+.command-output-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
