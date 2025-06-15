@@ -5,8 +5,7 @@ import Landing from './components/sections/Landing';
 import Projects from './components/sections/Projects';
 import MindDump from './components/sections/MindDump';
 import RDConsole from './components/sections/RDConsole';
-import LabFailures from './components/sections/LabFailures';
-import Connect from './components/sections/Connect';
+
 
 function App() {
   return (
